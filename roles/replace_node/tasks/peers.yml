@@ -18,11 +18,15 @@
     master_uuid: "{{ master_uuid.stdout }}"
 
 - name: Copy the details of the old node
-  fetch:
-    flat: yes
-    src: "{{ glusterd_libdir }}/peers"
-    dest: "/tmp/peers/"
+  copy:
+    remote_src: "{{ glusterd_libdir }}/peers"
+    dest: "/tmp"
   delegate_to: "{{ gluster_maintenance_old_node | mandatory }}"
+
+- name: stop the gluster service
+  shell: >
+    systemctl stop glusterd
+  delegate_to: "{{ gluster_maintenance_new_node | mandatory }}"
 
 - name: Delete the glusterd library from the old host
   file:
@@ -35,6 +39,11 @@
     systemctl restart glusterd
   delegate_to: "{{ gluster_maintenance_new_node | mandatory }}"
 
+- name: stop the gluster service
+  shell: >
+      systemctl stop glusterd
+  delegate_to: "{{ gluster_maintenance_new_node | mandatory }}"
+
 - name: Edit the new node's gluster.info
   lineinfile:
     path: "{{ glusterd_libdir }}/glusterd.info"
@@ -44,6 +53,12 @@
 
 - name: Copy the peer data to new node
   copy:
-    src: "/tmp/peers/"
-    dest: "{{ glusterd_libdir }}/peers"
+    remote_src: "/tmp/peers"
+    dest: "{{ glusterd_libdir }}"
   delegate_to: "{{ gluster_maintenance_new_node }}"
+
+- name: Start glusterd service
+  shell: >
+    systemctl start glusterd
+  delegate_to: "{{ gluster_maintenance_new_node | mandatory }}"
+
