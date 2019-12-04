@@ -22,7 +22,7 @@
     flat: yes
     src: "{{ glusterd_libdir }}/peers"
     dest: "/tmp/peers/"
-  delegate_to: "{{ gluster_maintenance_cluster_node | mandatory }}"
+  delegate_to: "{{ gluster_maintenance_old_node | mandatory }}"
 
 - name: Delete the glusterd library from the old host
   file:
@@ -30,16 +30,17 @@
     state: absent
   delegate_to: "{{ gluster_maintenance_old_node }}"
 
--name: Restart glusterd
- shell: > systemctl restart glusterd | touch {{ glusterd_libdir }}/glusterd.info
- delegate_to: "{{ gluster_maintenance_new_node | mandatory }}"
+- name: Restart glusterd
+  shell: >
+    systemctl restart glusterd
+  delegate_to: "{{ gluster_maintenance_new_node | mandatory }}"
 
 - name: Edit the new node's gluster.info
   lineinfile:
     path: "{{ glusterd_libdir }}/glusterd.info"
     regexp: '^UUID='
     line: "UUID={{ old_uuid }}"
-  delegate_to: "{{ gluster_maintenance_old_node | mandatory }}" //check if exists or do a restart glusterd
+  delegate_to: "{{ gluster_maintenance_old_node | mandatory }}"
 
 - name: Copy the peer data to new node
   copy:
