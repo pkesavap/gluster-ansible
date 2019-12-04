@@ -17,12 +17,23 @@
     old_uuid: "{{ old_node_uuid.stdout | trim }}"
     master_uuid: "{{ master_uuid.stdout }}"
 
-- name: Copy the details of the old node
-  copy:
-    remote_src: "{{ glusterd_libdir }}/peers"
-    dest: "/tmp"
+- name: Store the details of the old node
+  shell: >
+    (cd "{{ glusterd_libdir }}"/peers; find . -maxdepth 1 -type f) | cut -d'/' -f2
+  register: files_to_copy
   delegate_to: "{{ gluster_maintenance_old_node | mandatory }}"
 
+
+- name: Copy the details of the old node
+  fetch:
+    src: "{{ glusterd_libdir }}/peers/{{ item }}"
+    dest: /tmp/peers/
+    flat: yes
+  with_items:
+    "{{ files_to_copy.stdout_lines }}"
+  delegate_to: "{{ gluster_maintenance_old_node | mandatory }}"
+
+  
 - name: stop the gluster service
   shell: >
     systemctl stop glusterd
@@ -53,8 +64,10 @@
 
 - name: Copy the peer data to new node
   copy:
-    remote_src: "/tmp/peers"
-    dest: "{{ glusterd_libdir }}"
+    src: "{{ item }}"
+    dest: "{{ glusterd_libdir }}/peers/"
+  with_fileglob:
+    - /tmp/peers/*
   delegate_to: "{{ gluster_maintenance_new_node }}"
 
 - name: Start glusterd service
