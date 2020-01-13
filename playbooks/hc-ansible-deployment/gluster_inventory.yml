@@ -18,11 +18,12 @@ hc_nodes:
       # readcache         - enabled
       # readcachesize     - 20M
       # writepolicy       - auto
+      # Setting emulate512 as off, since we are using 4KN device so default is 4096, refer BZ:1789316
       #
       # gluster_infra_vdo:
-      #   - { name: 'vdo_sdc', device: '/dev/sdc', logicalsize: '5000G', emulate512: 'on', slabsize: '32G',
+      #   - { name: 'vdo_sdc', device: '/dev/sdc', logicalsize: '5000G', emulate512: 'off', slabsize: '32G',
       #       blockmapcachesize:  '128M', readcachesize: '20M', readcache: 'enabled', writepolicy: 'auto' }
-      #   - { name: 'vdo_sdd', device: '/dev/sdd', logicalsize: '3000G', emulate512: 'on', slabsize: '32G',
+      #   - { name: 'vdo_sdd', device: '/dev/sdd', logicalsize: '3000G', emulate512: 'off', slabsize: '32G',
       #       blockmapcachesize:  '128M', readcachesize: '20M', readcache: 'enabled', writepolicy: 'auto' }
 
       # When dedupe and compression is enabled on the device, 
@@ -113,11 +114,12 @@ hc_nodes:
       # readcache         - enabled
       # readcachesize     - 20M
       # writepolicy       - auto
+      # Setting emulate512 as off, since we are using 4KN device so default is 4096, refer BZ1789316
       #
       # gluster_infra_vdo:
-      #   - { name: 'vdo_sdc', device: '/dev/sdc', logicalsize: '5000G', emulate512: 'on', slabsize: '32G',
+      #   - { name: 'vdo_sdc', device: '/dev/sdc', logicalsize: '5000G', emulate512: 'off', slabsize: '32G',
       #       blockmapcachesize:  '128M', readcachesize: '20M', readcache: 'enabled', writepolicy: 'auto' }
-      #   - { name: 'vdo_sdd', device: '/dev/sdd', logicalsize: '3000G', emulate512: 'on', slabsize: '32G',
+      #   - { name: 'vdo_sdd', device: '/dev/sdd', logicalsize: '3000G', emulate512: 'off', slabsize: '32G',
       #       blockmapcachesize:  '128M', readcachesize: '20M', readcache: 'enabled', writepolicy: 'auto' }
 
       # When dedupe and compression is enabled on the device, 
@@ -208,11 +210,12 @@ hc_nodes:
       # readcache         - enabled
       # readcachesize     - 20M
       # writepolicy       - auto
+      # Setting emulate512 as off, since we are using 4KN device so default is 4096, refer BZ:1789316
       #
       # gluster_infra_vdo:
-      #   - { name: 'vdo_sdc', device: '/dev/sdc', logicalsize: '5000G', emulate512: 'on', slabsize: '32G',
+      #   - { name: 'vdo_sdc', device: '/dev/sdc', logicalsize: '5000G', emulate512: 'off', slabsize: '32G',
       #       blockmapcachesize:  '128M', readcachesize: '20M', readcache: 'enabled', writepolicy: 'auto' }
-      #   - { name: 'vdo_sdd', device: '/dev/sdd', logicalsize: '3000G', emulate512: 'on', slabsize: '32G',
+      #   - { name: 'vdo_sdd', device: '/dev/sdd', logicalsize: '3000G', emulate512: 'off', slabsize: '32G',
       #       blockmapcachesize:  '128M', readcachesize: '20M', readcache: 'enabled', writepolicy: 'auto' }
  
       # When dedupe and compression is enabled on the device, 
