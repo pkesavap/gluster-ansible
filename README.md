@@ -1,5 +1,8 @@
 # Gluster Ansible Roles
 
+[![CI](https://travis-ci.org/pkesavap/gluster-ansible.svg?branch=master)](https://travis-ci.org/pkesavap/gluster-ansible)
+
+
 gluster-ansible project provides [Ansible](https://www.ansible.com/) roles to deploy, configure, and maintain GlusterFS clusters.
 
 The goal of gluster-ansible is to develop roles which will enable the user to:
