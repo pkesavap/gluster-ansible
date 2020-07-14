@@ -4,7 +4,8 @@ python:
 
 # command to install dependencies
 install:
-
+- sudo docker pull centos
+- sudo docker run -it centos
 - dnf install epel-release
 - yum install ansible
 - yum install gluster-ansible-*
