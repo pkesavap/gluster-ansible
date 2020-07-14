@@ -14,7 +14,7 @@ before_install:
 
 script:
 - sudo docker pull centos
-- sudo docker run --detach --privileged --volume="${PWD}":/etc/ansible/roles/role_under_test:ro --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro travispoc /usr/lib/systemd/systemd > /tmp/container_id
+- sudo docker run -it --rm --detach centos > /tmp/container_id
 - sudo docker exec "$(cat /tmp/container_id)" yum install epel-release
 - sudo docker exec "$(cat /tmp/container_id)" yum install git ansible
 - sudo docker exec "$(cat /tmp/container_id)" yum install gluster-ansible-*
